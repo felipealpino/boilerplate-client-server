@@ -1,0 +1,13 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  // "typescript.preferences.importModuleSpecifier": "relative", // DESCOMENTAR quando voce estiver mexendo em algum submodule
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  "prettier.printWidth": 150,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  }
+}
