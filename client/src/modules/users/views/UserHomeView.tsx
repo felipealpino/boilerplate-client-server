@@ -1,12 +1,19 @@
-import { ModeToggle } from '@/components/ModeToggle'
-import { Button } from '@/components/ui/button'
-import { countStore } from '@/stores/count'
-import { socketStore } from '@/stores/socket'
-import { Link } from 'react-router-dom'
+import { ModeToggle } from '@/components/ModeToggle';
+import { Button } from '@/components/ui/button';
+import { AxiosFactory } from '@/factories/AxiosFactory';
+import { countStore } from '@/stores/count';
+import { socketStore } from '@/stores/socket';
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
+const factory = new AxiosFactory();
 export const UserHomeView: React.FC = () => {
-  const { socket } = socketStore()
-  const { countA, countB, setCountA, setCountB } = countStore()
+  const { socket } = socketStore();
+  const { countA, countB, setCountA, setCountB } = countStore();
+
+  useEffect(() => {
+    factory.get('?batata=123').then((response) => console.log('healthcheck', response.data));
+  }, []);
 
   return (
     <div className="flex flex-col gap-5">
@@ -34,5 +41,5 @@ export const UserHomeView: React.FC = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};

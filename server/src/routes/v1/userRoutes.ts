@@ -1,18 +1,18 @@
-import { CONNECTED_USERS } from "@/index";
-import { FastifyInstance, FastifyPluginAsync } from "fastify";
+import { CONNECTED_USERS } from '@/index';
+import { BootMiddleware } from '@/middlewares/Boot.middleware';
+import { FastifyInstance, FastifyPluginAsync } from 'fastify';
 
 export const userRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   fastify.register(
     async function (fastify) {
-      fastify.get("/", async (_request, reply) => {
-        try {
+      fastify.get('/', { preHandler: [BootMiddleware] }, async (request) => {
+        return request.app?.apiExecute(async () => {
           const users = Array.from(CONNECTED_USERS.keys());
-          reply.status(200).send({ version: "v1", data: users });
-        } catch {
-          reply.status(500).send({ error: "Internal Server Error" });
-        }
+          console.log('users:', users);
+          return { result: { version: 'v1', data: users } };
+        });
       });
     },
-    { prefix: "/users" }
+    { prefix: '/users' }
   );
 };

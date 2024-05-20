@@ -1,0 +1,13 @@
+{
+  "name": "application-client-site",
+  "author": "Felipe Gontijo Alpino",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.0.11"
+  }
+}

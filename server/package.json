@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node -r dotenv/config dist/index.js",
+    "lint-server": "eslint . --ext ts,js --report-unused-disable-directives --max-warnings 0",
     "dev": "nodemon",
     "build": "tsc"
   },
@@ -26,6 +27,17 @@
     "@types/socket.io": "^3.0.2",
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "lint-staged": "^15.2.2",
+    "prettier": "3.2.5",
+    "eslint": "^8.57.0"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }

@@ -1,7 +1,7 @@
 // // Arquivo: /src/sockets/index.ts
 // Exemplo de uso para uma sala de chat em tempo real
 
-import { Socket, Server as SocketIOServer } from "socket.io";
+import { Socket, Server as SocketIOServer } from 'socket.io';
 // import { pool } from "../services/db";
 
 export function joinRoomSocket({ socket, io }: { io: SocketIOServer; socket: Socket }) {
@@ -36,7 +36,7 @@ export function joinRoomSocket({ socket, io }: { io: SocketIOServer; socket: Soc
   //     console.log(`Cliente ${socket.id} desconectado da sala: ${room_id}`);
   //     socket.leave(`room-${room_id}`); // Sair da sala específica
   //   });
-  //   socket.on("SEND_MESSAGE", async (data: Record<string, any>) => {
+  //   socket.on("SEND_MESSAGE", async (data: GenericObject<any>) => {
   //     console.log("Mensagem recebida:", data.message);
   //     const { room_id, auth_user, message } = data;
   //     try {
