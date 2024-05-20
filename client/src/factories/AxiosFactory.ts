@@ -25,7 +25,7 @@ export class AxiosFactory {
     return Promise.reject(error);
   }
 
-  public get<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+  public get<T>(url: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse<T>> {
     return this.instance.get<T>(url, config);
   }
 

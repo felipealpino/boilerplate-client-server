@@ -54,6 +54,38 @@ export const QueryStringHelper = {
 
     return decodedObject as NonEncodedObject;
   },
+
+  convert(query: GenericObject<any>): Record<string, any> {
+    const result: Record<string, any> = {};
+
+    for (const key in query) {
+      if (Object.prototype.hasOwnProperty.call(query, key)) {
+        const value = query[key];
+        const keys = key.match(/[^[\]]+/g); // Extrai chaves de strings como "user[name]" e "user[profiles][0]"
+
+        if (keys) {
+          let currentLevel = result;
+
+          for (let i = 0; i < keys.length; i++) {
+            const currentKey = keys[i];
+
+            // Se estamos na última chave, definimos o valor
+            if (i === keys.length - 1) {
+              currentLevel[currentKey] = value;
+            } else {
+              // Se o próximo nível não existe, cria-se um objeto ou array, dependendo da próxima chave
+              if (!currentLevel[currentKey]) {
+                currentLevel[currentKey] = isNaN(Number(keys[i + 1])) ? {} : [];
+              }
+              currentLevel = currentLevel[currentKey];
+            }
+          }
+        }
+      }
+    }
+
+    return result;
+  },
 };
 
 function objectToQueryString(encodedObject: EncodedObject) {

@@ -16,7 +16,7 @@ export class FastifyRequestHandler {
 
   // Obtém os parâmetros de query string (decodificados)
   getQueryParams(): GenericObject<any> {
-    return QueryStringHelper.decode(this.request.query as Record<string, string>);
+    return QueryStringHelper.convert(this.request.query as Record<string, string>);
   }
 
   // Obtém os parâmetros de query string (como estão)

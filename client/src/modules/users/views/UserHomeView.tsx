@@ -12,7 +12,7 @@ export const UserHomeView: React.FC = () => {
   const { countA, countB, setCountA, setCountB } = countStore();
 
   useEffect(() => {
-    factory.get('?batata=123').then((response) => console.log('healthcheck', response.data));
+    factory.get('/', { params: { batata: 123 } }).then((response) => console.log('healthcheck', response.data));
   }, []);
 
   return (
