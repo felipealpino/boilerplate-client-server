@@ -14,13 +14,13 @@ export class AxiosFactory {
   }
 
   private handleSuccess(response: AxiosResponse): AxiosResponse {
-    // console.log('Sucesso!' /* , response */);
+    console.log('Sucesso!', response);
     return response;
   }
 
   private handleError(error: AxiosError): Promise<never> {
     console.log('Erro!', error);
-    return Promise.reject(error);
+    return Promise.reject(error.response?.data);
   }
 
   public get<T>(url: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse<T>> {

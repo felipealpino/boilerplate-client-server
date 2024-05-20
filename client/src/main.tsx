@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ReactDOM from 'react-dom/client';
 
 // DO NOT REMOVE THIS IMPORT
+import { Toaster } from '@/components/ui/toaster';
 import './index.css';
 
 // const REFETCH_INTERVAL = 4000; /** 4s */
@@ -25,6 +26,7 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
     <QueryClientProvider client={queryClient}>
+      <Toaster />
       <App />
     </QueryClientProvider>
   </ThemeProvider>

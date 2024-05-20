@@ -1,19 +1,13 @@
-import { FastifyRequestHandler } from '@/bootstrap/FastifyRequest.handler';
+import { FastifyRequestHandler } from '@/bootstrap/fastify/FastifyRequest.handler';
+import { ApiExecuteCallback, IBootInterface } from '@/bootstrap/interfaces/BootInterface';
 import { ErrorHandling, ErrorHandlingResponse } from '@/errors/ErrorHandling';
-import { GenericObject } from '@/types';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-export type ApiExecuteCallbackAppConfig = { request: FastifyRequestHandler; [key: string]: any };
-export type ApiExecuteCallbackReturn = { result: GenericObject<any>; [key: string]: any };
-export type ApiExecuteCallback = (appConfig: ApiExecuteCallbackAppConfig) => Promise<ApiExecuteCallbackReturn>;
-export type BootContructor = { request: FastifyRequest; reply: FastifyReply };
-
-export type BootController = (args: ApiExecuteCallbackAppConfig) => Promise<ApiExecuteCallbackReturn>;
-export class Boot {
+export class FastifyBoot implements IBootInterface {
   request: FastifyRequestHandler;
   reply: FastifyReply;
 
-  constructor(config: BootContructor) {
+  constructor(config: { request: FastifyRequest; reply: FastifyReply }) {
     this.request = new FastifyRequestHandler(config.request);
     this.reply = config.reply;
   }

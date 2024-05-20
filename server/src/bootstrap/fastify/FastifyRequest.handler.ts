@@ -1,8 +1,9 @@
+import { RequestInterface } from '@/bootstrap/interfaces/RequestInterface';
 import { QueryStringHelper } from '@/helpers/QueryString.helper';
 import { GenericObject } from '@/types';
 import { FastifyRequest } from 'fastify';
 
-export class FastifyRequestHandler {
+export class FastifyRequestHandler implements RequestInterface {
   private request: FastifyRequest;
 
   constructor(request: FastifyRequest) {

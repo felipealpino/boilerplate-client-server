@@ -1,4 +1,4 @@
-import { Boot } from '@/bootstrap/Boot';
+import { FastifyBoot } from '@/bootstrap/fastify/FastifyBoot';
 import 'fastify';
 import { Server as SocketIOServer } from 'socket.io';
 
@@ -7,6 +7,6 @@ declare module 'fastify' {
     io: SocketIOServer;
   }
   interface FastifyRequest {
-    app?: Boot;
+    app?: FastifyBoot;
   }
 }

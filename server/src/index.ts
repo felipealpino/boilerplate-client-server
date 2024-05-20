@@ -1,5 +1,5 @@
-import { config } from '@/config';
-import { BootMiddleware } from '@/middlewares/Boot.middleware';
+import { appConfiguration } from '@/config';
+import { FastifyBootMiddleware } from '@/middlewares/FastifyBoot.middleware';
 import { userRoutes } from '@/routes/v1/user.routes';
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
@@ -9,21 +9,21 @@ import { Socket } from 'socket.io';
 const fastify = Fastify({ logger: false });
 
 fastify.register(cors, {
-  origin: config.corsOrigin,
+  origin: appConfiguration.corsOrigin,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 });
 
 fastify.register(fastifyIO, {
   cors: {
-    origin: config.corsOrigin,
+    origin: appConfiguration.corsOrigin,
     methods: ['GET', 'POST'],
     credentials: true,
   },
 });
 
 // Adiciona antes de todas as rotas o middleware BootMiddleware
-fastify.addHook('onRequest', BootMiddleware);
+fastify.addHook('onRequest', FastifyBootMiddleware);
 
 fastify.register(userRoutes, { prefix: '/v1' });
 fastify.get('/', async (request) => {
@@ -60,8 +60,8 @@ fastify.ready().then(() => {
 
   const startServer = async () => {
     try {
-      await fastify.listen({ port: Number(config.port), host: config.host });
-      console.log(`Server rodando na porta: ${config.port}`);
+      await fastify.listen({ port: Number(appConfiguration.port), host: appConfiguration.host });
+      console.log(`Server rodando na porta: ${appConfiguration.port}`);
     } catch (err) {
       fastify.log.error(err);
       process.exit(1);

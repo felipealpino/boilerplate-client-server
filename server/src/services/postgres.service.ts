@@ -1,4 +1,4 @@
 import { Pool } from 'pg';
-import { config } from '../config';
+import { appConfiguration } from '../config';
 
-export const pool = new Pool({ connectionString: config.pgDbConnectionString });
+export const pool = new Pool({ connectionString: appConfiguration.pgDbConnectionString });
