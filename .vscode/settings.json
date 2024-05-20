@@ -6,7 +6,7 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
-  "prettier.printWidth": 150,
+  // "prettier.printWidth": 150,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   }
