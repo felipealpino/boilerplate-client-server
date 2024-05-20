@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     /** PRODUCTION */
     {
-      name: 'prod-dashboard-server',
+      name: 'prod-application-server',
       script: 'yarn build && yarn start',
       cwd: './server/', // Define o diretório de trabalho corrente para o serviço
       env: {
@@ -11,7 +11,7 @@ module.exports = {
       }
     },
     {
-      name: 'prod-dashboard-client',
+      name: 'prod-application-client',
       script: 'yarn build && client/node_modules/vite/bin/vite.js',
       env: {
         VITE_NODE_ENV: 'production',
@@ -21,7 +21,7 @@ module.exports = {
 
     /** DEVELOPMENT */
     {
-      name: 'dev-dashboard-client',
+      name: 'dev-application-client',
       script: 'yarn dev',
       // args: 'dev',
       cwd: './client/', // Define o diretório de trabalho corrente para o serviço
@@ -33,7 +33,7 @@ module.exports = {
       }
     },
     {
-      name: 'dev-dashboard-server',
+      name: 'dev-application-server',
       script: 'yarn dev',
       // args: 'dev',
       cwd: './server/', // Define o diretório de trabalho corrente para o serviço

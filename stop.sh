@@ -2,12 +2,12 @@
 
 if [ "$1" == "dev" ]; then
     echo "Parando serviços de desenvolvimento..."
-    pm2 delete dev-dashboard-server
-    pm2 delete dev-dashboard-client
+    pm2 delete dev-application-server
+    pm2 delete dev-application-client
 elif [ "$1" == "prod" ]; then
     echo "Parando serviços de produção..."
-    pm2 delete prod-dashboard-server
-    pm2 delete prod-dashboard-client
+    pm2 delete prod-application-server
+    pm2 delete prod-application-client
 elif [ "$1" == "all" ]; then
     echo "Parando todos os serviços..."
     pm2 delete all
