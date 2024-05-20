@@ -1,4 +1,4 @@
-import { QueryStringHelper } from '@/helpers/QueryStringHelper';
+import { QueryStringHelper } from '@/helpers/QueryString.helper';
 import { GenericObject } from '@/types';
 import { FastifyRequest } from 'fastify';
 

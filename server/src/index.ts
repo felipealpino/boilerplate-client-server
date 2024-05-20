@@ -1,6 +1,6 @@
 import { Boot } from '@/bootstrap/Boot';
 import { config } from '@/config';
-import { userRoutes } from '@/routes/v1/userRoutes';
+import { userRoutes } from '@/routes/v1/user.routes';
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import fastifyIO from 'fastify-socket.io';
@@ -32,9 +32,6 @@ fastify.get('/', async (request, reply) => {
   });
 });
 
-type IUser = { id: string };
-export const CONNECTED_USERS = new Map<string, IUser>();
-
 fastify.ready().then(() => {
   console.log('Socket.io está pronto.');
   const io = fastify.io;
@@ -46,12 +43,10 @@ fastify.ready().then(() => {
 
     socket.on('CONNECT_USER', (data) => {
       console.log('CONNECT_USER:', data);
-      CONNECTED_USERS.set(data.clientId, { id: socket.id });
     });
 
     socket.on('DISCONNECT_USER', (data) => {
       console.log('DISCONNECT_USER:', data);
-      CONNECTED_USERS.delete(data.clientId);
     });
   });
 

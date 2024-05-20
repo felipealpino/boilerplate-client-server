@@ -1,5 +1,5 @@
-import { APP_ROUTES } from '@/components/InitApp/LoadRoutes/routes'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { APP_ROUTES } from '@/components/Bootstrap/LoadRoutes/routes';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export const LoadRoutes: React.FC = () => {
   return (
@@ -11,5 +11,5 @@ export const LoadRoutes: React.FC = () => {
         <Route path="*" element={<div>Rota não encontrada</div>} />
       </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};

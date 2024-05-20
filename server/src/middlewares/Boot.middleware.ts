@@ -7,7 +7,7 @@ export function BootMiddleware(request: FastifyRequest, reply: FastifyReply, don
     request.app = app;
     done();
   } catch (error: unknown) {
-    if (error instanceof Error) done(error);
-    done();
+    app.catchError(error);
+    // done();
   }
 }
