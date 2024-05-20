@@ -8,6 +8,7 @@ export type ApiExecuteCallbackReturn = { result: GenericObject<any>; [key: strin
 export type ApiExecuteCallback = (appConfig: ApiExecuteCallbackAppConfig) => Promise<ApiExecuteCallbackReturn>;
 export type BootContructor = { request: FastifyRequest; reply: FastifyReply };
 
+export type BootController = (args: ApiExecuteCallbackAppConfig) => Promise<ApiExecuteCallbackReturn>;
 export class Boot {
   request: FastifyRequestHandler;
   reply: FastifyReply;

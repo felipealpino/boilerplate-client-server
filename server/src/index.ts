@@ -1,5 +1,5 @@
-import { Boot } from '@/bootstrap/Boot';
 import { config } from '@/config';
+import { BootMiddleware } from '@/middlewares/Boot.middleware';
 import { userRoutes } from '@/routes/v1/user.routes';
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
@@ -22,13 +22,13 @@ fastify.register(fastifyIO, {
   },
 });
 
-fastify.register(userRoutes, { prefix: '/v1' });
+// Adiciona antes de todas as rotas o middleware BootMiddleware
+fastify.addHook('onRequest', BootMiddleware);
 
-fastify.get('/', async (request, reply) => {
-  const app = new Boot({ request, reply });
-  return app.apiExecute(async () => {
-    const queryStrings = app.request.getQueryParams();
-    return { result: { health: 'checked', queryStrings } };
+fastify.register(userRoutes, { prefix: '/v1' });
+fastify.get('/', async (request) => {
+  request.app?.apiExecute(async () => {
+    return { result: { health: 'checked' } };
   });
 });
 
