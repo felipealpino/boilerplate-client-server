@@ -15,13 +15,11 @@ export class AxiosFactory {
 
   private handleSuccess(response: AxiosResponse): AxiosResponse {
     // console.log('Sucesso!' /* , response */);
-    // Você pode adicionar lógica de tratamento de sucesso global aqui
     return response;
   }
 
   private handleError(error: AxiosError): Promise<never> {
     console.log('Erro!', error);
-    // Você pode adicionar lógica de tratamento de erro global aqui
     return Promise.reject(error);
   }
 
