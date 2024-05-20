@@ -14,7 +14,7 @@ export class AxiosFactory {
   }
 
   private handleSuccess(response: AxiosResponse): AxiosResponse {
-    console.log('Successo!' /* , response */);
+    // console.log('Sucesso!' /* , response */);
     // Você pode adicionar lógica de tratamento de sucesso global aqui
     return response;
   }
