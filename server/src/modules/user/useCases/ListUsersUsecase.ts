@@ -1,5 +1,5 @@
 import { ApiExecuteCallbackReturn } from '@/bootstrap/interfaces/BootInterface';
-import { ListUserControllerOptions } from '@/modules/user/controllers/ListUsers.controller';
+import { ListUserControllerOptions } from '@/modules/user/controllers/ListUsersController';
 
 type ListUserUseCaseExecute = (args: { payload: ListUserControllerOptions }) => Promise<ApiExecuteCallbackReturn>;
 type ListUserUseCaseInterface = (args: Record<string, any>) => { execute: ListUserUseCaseExecute };

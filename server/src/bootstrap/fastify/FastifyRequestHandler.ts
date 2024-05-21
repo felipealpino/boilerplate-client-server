@@ -1,5 +1,5 @@
 import { RequestInterface } from '@/bootstrap/interfaces/RequestInterface';
-import { QueryStringHelper } from '@/helpers/QueryString.helper';
+import { QueryStringHelper } from '@/helpers/QueryStringHelper';
 import { GenericObject } from '@/types';
 import { FastifyRequest } from 'fastify';
 

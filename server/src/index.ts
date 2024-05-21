@@ -1,6 +1,6 @@
 import { appConfiguration } from '@/config';
-import { FastifyBootMiddleware } from '@/middlewares/FastifyBoot.middleware';
-import { userRoutes } from '@/routes/v1/user.routes';
+import { FastifyBootMiddleware } from '@/middlewares/FastifyBootMiddleware';
+import { userRoutes } from '@/routes/v1/userRoutes';
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import fastifyIO from 'fastify-socket.io';

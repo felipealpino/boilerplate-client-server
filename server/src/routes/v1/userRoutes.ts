@@ -1,4 +1,4 @@
-import { ListUserController } from '@/modules/user/controllers/ListUsers.controller';
+import { ListUserController } from '@/modules/user/controllers/ListUsersController';
 import { FastifyInstance, FastifyPluginAsync } from 'fastify';
 
 export const userRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {

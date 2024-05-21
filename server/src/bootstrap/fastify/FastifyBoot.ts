@@ -1,4 +1,4 @@
-import { FastifyRequestHandler } from '@/bootstrap/fastify/FastifyRequest.handler';
+import { FastifyRequestHandler } from '@/bootstrap/fastify/FastifyRequestHandler';
 import { ApiExecuteCallback, IBootInterface } from '@/bootstrap/interfaces/BootInterface';
 import { ErrorHandling, ErrorHandlingResponse } from '@/errors/ErrorHandling';
 import { FastifyReply, FastifyRequest } from 'fastify';

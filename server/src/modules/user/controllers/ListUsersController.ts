@@ -1,5 +1,5 @@
 import { BootController } from '@/bootstrap/interfaces/BootInterface';
-import { ListUserUseCase } from '@/modules/user/usecases/ListUsers.usecase';
+import { ListUserUseCase } from '@/modules/user/useCases/ListUsersUsecase';
 import { parseFactory } from '@/utils/parseFactory';
 import { z } from 'zod';
 
