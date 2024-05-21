@@ -14,12 +14,12 @@ export class AxiosFactory {
   }
 
   private handleSuccess(response: AxiosResponse): AxiosResponse {
-    console.log('Sucesso!', response);
+    if (import.meta.env.VITE_NODE_ENV === 'development') console.log('Sucesso!', response);
     return response;
   }
 
   private handleError(error: AxiosError): Promise<never> {
-    console.log('Erro!', error);
+    if (import.meta.env.VITE_NODE_ENV === 'development') console.log('Erro!', error);
     return Promise.reject(error.response?.data);
   }
 
