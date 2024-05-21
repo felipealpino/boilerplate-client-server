@@ -6,6 +6,6 @@ type ListUserUseCaseInterface = (args: Record<string, any>) => { execute: ListUs
 
 export const ListUserUseCase: ListUserUseCaseInterface = () => ({
   async execute({ payload }) {
-    return { result: { version: 'v1', data: payload } };
+    return { result: { version: 'v1', ...payload } };
   },
 });

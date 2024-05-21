@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 export const UserByIdView: React.FC = () => {
   const { userId } = useParams();
-  /* const { data } =  */ useListUsers({
+  const { data } = useListUsers({
     filters: {
       user: {
         name: 'John Doe',
@@ -13,5 +13,10 @@ export const UserByIdView: React.FC = () => {
       },
     },
   });
-  return <div>Hello {userId}</div>;
+
+  return (
+    <div>
+      Hello {data?.user.name} - {userId}
+    </div>
+  );
 };

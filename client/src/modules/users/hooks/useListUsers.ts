@@ -4,15 +4,17 @@ import { CommonArgs } from '@/modules/users/types';
 import { useQuery } from '@tanstack/react-query';
 
 const factory = new AxiosFactory();
+
+type ListUsersResponse = { user: { name: string } };
 type ListUsersArgs = CommonArgs & { filters?: Record<string, any> };
 
 export const useListUsers = (args: ListUsersArgs = {}) => {
   const { toast } = useToast();
   const { options, filters } = args;
 
-  const ListUsers = async (args: ListUsersArgs['filters']) => {
+  const listUsers = async (filters?: ListUsersArgs['filters']) => {
     try {
-      const response = await factory.get('v1/users', { params: args });
+      const response = await factory.get<ListUsersResponse>('v1/users', { params: filters });
       return response.data;
     } catch (error: any) {
       toast({
@@ -23,9 +25,9 @@ export const useListUsers = (args: ListUsersArgs = {}) => {
     }
   };
 
-  return useQuery({
+  return useQuery<Awaited<ReturnType<typeof listUsers>>>({
     queryKey: ['users', filters],
-    queryFn: async () => await ListUsers(filters),
+    queryFn: async () => await listUsers(filters),
     ...options,
   });
 };
