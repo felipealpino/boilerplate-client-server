@@ -32,5 +32,6 @@ export const LoadSocket: React.FC = () => {
       connection?.disconnect();
     };
   }, [setSocket]);
+
   return <Fragment />;
 };
