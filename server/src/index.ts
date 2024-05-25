@@ -1,6 +1,7 @@
 import { appConfiguration } from '@/config';
 import { FastifyBootMiddleware } from '@/middlewares/FastifyBootMiddleware';
 import { userRoutes } from '@/routes/v1/userRoutes';
+import { AppRoom } from '@/sockets/AppRoom';
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import fastifyIO from 'fastify-socket.io';
@@ -22,6 +23,10 @@ fastify.register(fastifyIO, {
   },
 });
 
+const AVAILABLE_ROOMS: { [key: string]: any } = {
+  APP_ROOM: AppRoom,
+};
+
 // Adiciona antes de todas as rotas o middleware BootMiddleware
 fastify.addHook('onRequest', FastifyBootMiddleware);
 
@@ -37,6 +42,17 @@ fastify.ready().then(() => {
   const io = fastify.io;
 
   io.on('connection', async (socket: Socket) => {
+    socket.on('JOIN_ROOM', (data) => {
+      const { roomName, options } = data;
+      const FoundRoom = AVAILABLE_ROOMS[roomName];
+      if (FoundRoom) {
+        new FoundRoom(io, socket, roomName).onJoin(options);
+      } else {
+        console.error(`Room ${roomName} does not exist`);
+        socket.emit('error', `Room ${roomName} does not exist`);
+      }
+    });
+
     console.log('Cliente conectado:', socket.id);
     // joinRoomSocket({ io, socket });
     logConnectedSockets();

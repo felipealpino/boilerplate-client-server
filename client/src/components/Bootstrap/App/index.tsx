@@ -5,13 +5,12 @@ import { Fragment, useMemo } from 'react';
 
 export function App() {
   const { socket } = socketStore();
-
-  const canLoadRoutes = useMemo(() => Boolean(socket), [socket]);
+  const isAppReady = useMemo(() => socket?.connected, [socket]);
 
   return (
     <Fragment>
       <LoadSocket />
-      {canLoadRoutes && <LoadRoutes />}
+      {isAppReady && <LoadRoutes />}
     </Fragment>
   );
 }

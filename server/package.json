@@ -17,12 +17,14 @@
     "fastify-postgres": "^3.7.0",
     "fastify-socket.io": "^5.0.0",
     "fastify-websocket": "^4.3.0",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.5",
     "socket.io": "^4.7.5",
     "tsconfig-paths": "^4.2.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.7",
     "@types/pg": "^8.11.5",
     "@types/socket.io": "^3.0.2",
