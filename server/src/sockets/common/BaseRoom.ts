@@ -1,25 +1,21 @@
 import { Server, Socket } from 'socket.io';
 
-export abstract class Room<T> {
+export type CommonArgs = {
+  socket: Socket;
+};
+
+export type OnJoinArgs = CommonArgs & {
+  [key: string]: any;
+};
+export abstract class BaseRoom<T> {
   protected io: Server;
-  protected socket: Socket;
+  protected connectedSockets: Map<string, Socket> = new Map();
   protected state: T;
 
-  constructor(io: Server, socket: Socket) {
+  constructor(io: Server) {
     this.io = io;
-    this.socket = socket;
-
-    // this.socket.on('JOIN_ROOM', this.onJoin.bind(this));
-    this.onJoin.bind(this);
-    this.socket.on('disconnect', this.onDisconnect.bind(this));
   }
 
-  protected abstract onJoin(options: Record<string, any>): Promise<void>;
-
-  private onDisconnect() {
-    console.log(`${this.socket.id} disconnected`);
-    this.onLeave();
-  }
-
-  protected abstract onLeave(): void;
+  protected abstract onJoin(args: OnJoinArgs): Promise<void>;
+  protected abstract onLeave(args: CommonArgs): void;
 }

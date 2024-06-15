@@ -7,7 +7,7 @@ export const LoadSocket: React.FC = () => {
 
   useEffect(() => {
     const connection = io(import.meta.env.VITE_WEBSOCKET_URL || '', {
-      auth: { authUser: { name: 'Felipe Hi !' } },
+      auth: { authUser: { id: Date.now() } },
       reconnection: true, // Habilita a reconexão automática
       reconnectionAttempts: Infinity, // Número máximo de tentativas de reconexão
       reconnectionDelay: 3000, // Intervalo inicial de reconexão (ms)
@@ -17,10 +17,8 @@ export const LoadSocket: React.FC = () => {
 
     connection?.on('connect', () => {
       setSocket(connection);
-      connection?.emit('CONNECT_USER', { clientId: connection.id });
-
+      // connection?.emit('SOCKET:CONNECT_USER', { clientId: connection.id });
       console.log('Conectado ao servidor WebSocket.');
-      connection?.emit('CONNECT_USER', { clientId: connection.id });
     });
 
     window.addEventListener('beforeunload', () => {

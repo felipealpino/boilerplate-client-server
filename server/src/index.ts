@@ -1,7 +1,7 @@
 import { appConfiguration } from '@/config';
 import { FastifyBootMiddleware } from '@/middlewares/FastifyBootMiddleware';
 import { userRoutes } from '@/routes/v1/userRoutes';
-import { AppRoom } from '@/sockets/AppRoom';
+import { AVAILABLE_ROOMS, SingletonRooms } from '@/sockets/SingletonRooms';
 import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import fastifyIO from 'fastify-socket.io';
@@ -23,9 +23,7 @@ fastify.register(fastifyIO, {
   },
 });
 
-const AVAILABLE_ROOMS: { [key: string]: any } = {
-  APP_ROOM: AppRoom,
-};
+type JoinRoomDataArgs = { roomName: keyof typeof AVAILABLE_ROOMS; options: Record<string, unknown> };
 
 // Adiciona antes de todas as rotas o middleware BootMiddleware
 fastify.addHook('onRequest', FastifyBootMiddleware);
@@ -40,38 +38,30 @@ fastify.get('/', async (request) => {
 fastify.ready().then(() => {
   console.log('Socket.io está pronto.');
   const io = fastify.io;
+  const RoomManager = new SingletonRooms({ io });
 
   io.on('connection', async (socket: Socket) => {
-    socket.on('JOIN_ROOM', (data) => {
+    logSockets();
+
+    socket.on('JOIN_ROOM', async (data: JoinRoomDataArgs) => {
+      console.log('data:', data);
       const { roomName, options } = data;
-      const FoundRoom = AVAILABLE_ROOMS[roomName];
-      if (FoundRoom) {
-        new FoundRoom(io, socket, roomName).onJoin(options);
-      } else {
-        console.error(`Room ${roomName} does not exist`);
-        socket.emit('error', `Room ${roomName} does not exist`);
-      }
+
+      const FoundRoom = RoomManager.getRoom(roomName);
+      await FoundRoom.onJoin({ socket, ...options });
     });
 
-    console.log('Cliente conectado:', socket.id);
-    // joinRoomSocket({ io, socket });
-    logConnectedSockets();
-
-    socket.on('CONNECT_USER', (data) => {
-      console.log('CONNECT_USER:', data);
-    });
-
-    socket.on('DISCONNECT_USER', (data) => {
-      console.log('DISCONNECT_USER:', data);
+    socket.on('disconnect', () => {
+      logSockets();
     });
   });
 
-  const logConnectedSockets = () => {
+  const logSockets = () => {
     const allSockets = Array.from(io.sockets.sockets.keys());
     console.log(`Total de conexões ativas: ${allSockets.length}`);
-    allSockets.forEach((socketId) => {
-      console.log(`Socket ativo: ${socketId}`);
-    });
+    // allSockets.forEach((socketId) => {
+    //   console.log(`Socket ativo: ${socketId}`);
+    // });
   };
 
   const startServer = async () => {

@@ -1,37 +1,23 @@
-import { Room } from '@/sockets/common/BaseRoom';
-import { Server, Socket } from 'socket.io';
+import { BaseRoom, CommonArgs, OnJoinArgs } from '@/sockets/common/BaseRoom';
+import { Server } from 'socket.io';
 
-export abstract class AuthTokenRoom<T> extends Room<T> {
-  constructor(io: Server, socket: Socket) {
-    super(io, socket);
-    // this.socket.use((packet, next) => this.authenticate(packet, next));
+export abstract class AuthTokenRoom<T> extends BaseRoom<T> {
+  constructor(io: Server) {
+    super(io);
   }
 
-  // private async authenticate(packet: any, next: (err?: any) => void) {
-  //   console.log('packet', packet);
-  //   const token = packet?.token;
-  //   if (!process.env.AUTH_APP_SECRET) return next(new Error('AUTH_APP_SECRET not found'));
-
-  //   try {
-  //     const decoded = jwt.verify(token, process.env.AUTH_APP_SECRET) as JwtPayload;
-  //     (this.socket as any).authUser = decoded;
-  //     next();
-  //   } catch (error: any) {
-  //     console.error('AuthTokenRoom authenticate error:', error.message);
-  //     next(new Error('Authentication error'));
-  //   }
-  // }
-
-  protected async onJoin(options: Record<string, any>): Promise<void> {
-    const authUser = this.socket.handshake.auth;
-    console.log('AuthTokenRoom onJoin authUser:', authUser);
-    if (!authUser) {
-      this.socket.emit('error', 'Unauthorized');
-      this.socket.disconnect(true);
-      return;
-    }
-    await this.onJoinAuthenticated(options);
+  private authenticate(args: CommonArgs): void {
+    const authUser = args.socket.handshake.auth;
+    if (!authUser) throw new Error('Usuário não autenticado!');
+    console.log('Usuário autenticado!');
   }
 
-  protected abstract onJoinAuthenticated(options: Record<string, any>): Promise<void>;
+  public async onJoin(args: OnJoinArgs): Promise<void> {
+    this.connectedSockets.set(args.socket.id, args.socket);
+    this.authenticate(args);
+    await this.onJoinAuthenticated(args);
+  }
+
+  protected abstract onLeave(options: OnJoinArgs): Promise<void>;
+  protected abstract onJoinAuthenticated(options: OnJoinArgs): Promise<void>;
 }

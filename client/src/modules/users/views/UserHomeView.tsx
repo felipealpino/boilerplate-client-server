@@ -16,18 +16,21 @@ export const UserHomeView: React.FC = () => {
 
   useEffect(() => {
     socket?.emit('JOIN_ROOM', { roomName: 'APP_ROOM', options: { batata: 123 } });
-    socket?.on('CONNECTED', (args) => console.log(`Conectado na ${args.roomName}`));
-  }, [socket]);
-
-  useEffect(() => {
-    socket?.on('CHANGE_COUNT', (args) => {
-      console.log('CHANGE_COUNT event received:', args);
+    socket?.on('APP_ROOM:CONNECTED', (args) => console.log(`Conectado na ${args.roomName}`));
+    socket?.on('APP_ROOM:CHANGE_COUNT', (args) => {
+      console.log('APP_ROOM:CHANGE_COUNT event received:', args);
       setSocketCount(1, args);
     });
+
+    return () => {
+      socket?.emit('APP_ROOM:DISCONNECT');
+      socket?.removeAllListeners('APP_ROOM:CONNECTED');
+      socket?.removeAllListeners('APP_ROOM:CHANGE_COUNT');
+    };
   }, [setSocketCount, socket]);
 
   function onChangeSocketCount(action: CounterAction['action']) {
-    socket?.emit('CHANGE_COUNT', { action });
+    socket?.emit('APP_ROOM:CHANGE_COUNT', { action });
   }
 
   return (
